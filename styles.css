@@ -1,0 +1,82 @@
+body {
+    overflow-x: hidden;
+    font-family: Arial, sans-serif;
+    margin: 0; /* Remove any default margin on the body */
+}
+
+.sidebar {
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px; /* Fixed width for sidebar */
+    background-color: #343a40;
+    padding-top: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.sidebar h4 {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.sidebar hr {
+    margin: 10px 0;
+}
+
+.sidebar .nav-link {
+    color: #fff;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #495057;
+    border-radius: 5px;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 250px; /* Align main content with sidebar */
+    padding: 20px; /* Add padding for content */
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    transition: margin-left 0.3s;
+}
+
+/* Styles for devices greater than 768px */
+@media (min-width: 769px) {
+    .sidebar {
+        margin: 0; /* Ensure no margin for sidebar */
+    }
+
+    .main-content {
+        margin-left: 120px; /* Align main content with sidebar */
+    }
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-250px); /* Hide sidebar */
+    }
+
+    .sidebar.open {
+        transform: translateX(0); /* Show sidebar when open */
+    }
+
+    .main-content {
+        margin-left: 0; /* No margin on mobile */
+    }
+
+    .sidebar-toggle {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 1100;
+        display: block; /* Show toggle button on mobile */
+    }
+}
