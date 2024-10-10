@@ -42,6 +42,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['send_link'])) {
         $error_message = "Failed to send link. Please try again.";
     }
 }
+
+$url_path = $_SERVER['REQUEST_URI'];
+
+// Remove any query parameters if present
+$url_path_without_query = strtok($url_path, '?');
+
+// Remove the filename from the end of the URL path
+$base_url = preg_replace('/\/[^\/]+\.[^\/]+$/', '', $url_path_without_query);
+
+$publicLink = "https://".$_SERVER['HTTP_HOST'].$base_url."/public_review.php?hotel_id=".$hotel_restaurant_id;
 ?>
 
 <?php if ($hotel_status == 2) { ?>
@@ -73,8 +83,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['send_link'])) {
         <label for="publicReviewLink" class="form-label text-white">Public Review Link</label>
         <div class="input-group">
             <input type="text" id="publicReviewLink" class="form-control"
-                value="http://localhost/crms/public_review.php?hotel_id=<?= $hotel_restaurant_id ?>" disabled>
-            <button class="btn btn-secondary col-md-2" type="button" id="copyLinkBtn">Copy <i
+                value="<?= $publicLink ?>" disabled>
+            <button class="btn btn-secondary col-md-2" type="button" id="copyLinkBtn" onclick="copyText()">Copy <i
                     class="fa fa-copy"></i></button>
         </div>
     </div>
@@ -207,7 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['send_link'])) {
     };
 
     // Function to copy public review link
-    document.getElementById('copyLinkBtn').onclick = function () {
+    function copyText() {
         const publicReviewLinkInput = document.getElementById('publicReviewLink');
 
         // Ensure the text is selected for copying
