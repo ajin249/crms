@@ -54,6 +54,8 @@ $base_url = preg_replace('/\/[^\/]+\.[^\/]+$/', '', $url_path_without_query);
 $publicLink = "https://".$_SERVER['HTTP_HOST'].$base_url."/public_review.php?hotel_id=".$hotel_restaurant_id;
 ?>
 
+
+
 <?php if ($hotel_status == 2) { ?>
     <!-- Account suspended modal -->
     <div class="modal show bg-secondary" id="accountSuspendedModal" tabindex="-1" aria-labelledby="accountSuspendedLabel"
@@ -131,7 +133,7 @@ $publicLink = "https://".$_SERVER['HTTP_HOST'].$base_url."/public_review.php?hot
                                         <input type="tel" name="whatsapp" id="whatsapp" class="form-control"
                                             placeholder="+91xxxxxxxxxx" required>
                                     </div>
-                                    <button type="button" class="btn btn-success" id="whatsappBtn">Send Link via
+                                    <button type="button" class="btn btn-success" id="whatsappBtn" onclick="sendToWhatsapp()">Send Link via
                                         WhatsApp</button>
                                 </div>
                             </div>
@@ -196,8 +198,9 @@ $publicLink = "https://".$_SERVER['HTTP_HOST'].$base_url."/public_review.php?hot
 <?php } ?>
 
 <script>
+
     // Function to send WhatsApp link
-    document.getElementById('whatsappBtn').onclick = function () {
+     function sendToWhatsapp() {
         const phoneNumber = document.getElementById('whatsapp').value.trim();
 
         if (!phoneNumber.match(/^\+\d{10,15}$/)) {
@@ -207,9 +210,9 @@ $publicLink = "https://".$_SERVER['HTTP_HOST'].$base_url."/public_review.php?hot
 
         const formattedPhoneNumber = phoneNumber.replace(/\D/g, ''); // Remove non-numeric characters
         const hotelId = <?= $hotel_restaurant_id ?>;
-        const hotelName = "<?= strtolower($hotel_name) ?>";  // Properly formatted
-        const publicReviewLink = "http://localhost/crms/public_review.php?hotel_id=" + hotelId;
-        const whatsappMessage = encodeURIComponent("Please leave us a review: " + publicReviewLink);
+        const hotelName = "<?= strtoupper($hotel_name) ?>";  // Properly formatted
+        // const publicReviewLink = "http://localhost/crms/public_review.php?hotel_id=" + hotelId;
+        const whatsappMessage = encodeURIComponent("Hi this is from "+ hotelName +". Please leave us a review: <?= $publicLink ?>" );
         const whatsappUrl = "https://wa.me/" + formattedPhoneNumber + "?text=" + whatsappMessage;
 
         // Open WhatsApp link in a new tab
